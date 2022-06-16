@@ -7,6 +7,7 @@ namespace CalculatorVersion2
 {
     public class Calculator
     {
+        public static Calculator myCal = new Calculator();
 
         public static List<double> userInputs = new List<double>();
         public static List<string> CalculationHistory = new List<string>();
@@ -33,6 +34,7 @@ namespace CalculatorVersion2
         public static string resultString;
         public static string calcFormString;
         public static string numberHolder;
+        public static string saveResult;
 
         public static bool mainMenu = true;
         public static bool calcFormMenu = true;
@@ -75,24 +77,37 @@ namespace CalculatorVersion2
             {
                 if (resultSavedInMemory != 0 && storedResults)
                 {
-                    Console.WriteLine($"Would you like to use your stored result ({resultSavedInMemory}) in this calculation?\n1. Yes\n2. No");
 
-                    switch (Console.ReadLine())
+                    while (storedResults)
                     {
-                        case "1":
+
+
+                        Console.WriteLine($"Would you like to use your stored result ({resultSavedInMemory}) in this calculation?\n1. Yes\n2. No");
+                        string UseSavedResult = Console.ReadLine();
+
+                        if (UseSavedResult == "1")
+                        {
+
                             Console.WriteLine($"You pressed yes, adding {resultSavedInMemory} to you current calculation and clearing the saved result from the stored memory");
 
                             userInputs.Add(resultSavedInMemory);
                             resultSavedInMemory = 0;
                             oneNumberCatch = 1;
-                            break;
-                        case "2":
                             storedResults = false;
-                            break;
-                        default:
-                            break;
+                        }
+                        else if (UseSavedResult == "2")
+                        {
+                            storedResults = false;
+                        }
+                        else
+                        {
+                            Console.Clear();
+                            Console.WriteLine("Try again...\n");
+                        }
+
                     }
                 }
+
 
                 Console.Write("Enter a number: ");
 
@@ -132,7 +147,7 @@ namespace CalculatorVersion2
             Console.Write("Please write your whole calculation: ");
             calculationInput = Console.ReadLine();
 
-        }
+        } // Not finnished
         public static void CalculationStringHandler()
         {
 
@@ -140,17 +155,17 @@ namespace CalculatorVersion2
 
             for (int i = 0; i < calculationInput.Length; i++)
             {
-                Console.WriteLine(i+" = antal loopar");
+                Console.WriteLine(i + " = antal loopar");
                 Console.WriteLine(calculationInput[i]);
                 if (char.IsDigit(calculationInput, i))
                 {
                     numberHolder += calculationInput[i];
-               
+
                 }
-                if (calculationInput[i] == 43 
-                 || calculationInput[i] == 45 
-                 || calculationInput[i] == 47 
-                 || calculationInput[i] == 42 
+                if (calculationInput[i] == 43
+                 || calculationInput[i] == 45
+                 || calculationInput[i] == 47
+                 || calculationInput[i] == 42
                  || calculationInput.Length - 1 == i)
 
                 {
@@ -231,9 +246,10 @@ namespace CalculatorVersion2
 
             Console.ReadLine();
 
-        }
+        } // Not finnished
         public static void CalculationMenu()
         {
+            
             while (calcFormMenu)
             {
                 Console.WriteLine("Choose your from of calculation\n1. Addition (+)\n2. Subtraction (-)\n3. Division(/)\n4. Multiplication(*)");
@@ -241,30 +257,30 @@ namespace CalculatorVersion2
                 {
                     case "1":
                         Console.Clear();
-                        Addition();
-                        StoreCalculation("+");
+                        myCal.Addition(userInputs);
+                        myCal.StoreCalculation("+", userInputs);
                         PrintResult();
                         calcFormMenu = false;
 
                         break;
                     case "2":
                         Console.Clear();
-                        Subtraction();
-                        StoreCalculation("-");
+                        myCal.Subtraction(userInputs);
+                        myCal.StoreCalculation("-", userInputs);
                         PrintResult();
                         calcFormMenu = false;
                         break;
                     case "3":
                         Console.Clear();
-                        Division();
-                        StoreCalculation("/");
+                        myCal.Division(userInputs);
+                        myCal.StoreCalculation("/", userInputs);
                         PrintResult();
                         calcFormMenu = false;
                         break;
                     case "4":
                         Console.Clear();
-                        Multiplication();
-                        StoreCalculation("*");
+                        myCal.Multiplication(userInputs);
+                        myCal.StoreCalculation("*", userInputs);
                         PrintResult();
                         calcFormMenu = false;
                         break;
@@ -277,8 +293,10 @@ namespace CalculatorVersion2
             calcFormMenu = true;
         }
         //----------------------------------------------------------
-        public static double Addition()
+        public double Addition(List<double> inputList)
         {
+            userInputs = inputList;
+
 
             foreach (var item in userInputs)
             {
@@ -287,8 +305,9 @@ namespace CalculatorVersion2
             return result;
 
         }
-        public static double Subtraction()
+        public double Subtraction(List<double> inputList)
         {
+            userInputs = inputList;
 
             result = userInputs[0];
 
@@ -298,8 +317,9 @@ namespace CalculatorVersion2
             }
             return result;
         }
-        public static double Multiplication()
+        public double Multiplication(List<double> inputList)
         {
+            userInputs = inputList;
             result = userInputs[0];
 
             for (int i = 1; i < userInputs.Count; i++)
@@ -308,8 +328,9 @@ namespace CalculatorVersion2
             }
             return result;
         }
-        public static double Division()
+        public double Division(List<double> inputList)
         {
+            userInputs = inputList;
             result = userInputs[0];
 
             for (int i = 1; i < userInputs.Count; i++)
@@ -319,8 +340,9 @@ namespace CalculatorVersion2
             return result;
         }
         //----------------------------------------------------------
-        public static void StoreCalculation(string calcOperator)
+        public string StoreCalculation(string calcOperator, List<double> inputList)
         {
+            userInputs = inputList;
             calcFormString = calcOperator;
 
             for (int i = 0; i < userInputs.Count; i++)
@@ -340,7 +362,7 @@ namespace CalculatorVersion2
             resultString += $"= {result}";
             CalculationHistory.Add(resultString);
 
-
+            return resultString;
 
 
         }
@@ -369,16 +391,16 @@ namespace CalculatorVersion2
                 while (SaveResultMeny)
                 {
                     Console.WriteLine($"By the way!\nWould you like to save this result to use for later?\n1. Yes\n2. No");
-                    string SaveResult = Console.ReadLine();
-                    if (SaveResult == "1")
+                    saveResult = Console.ReadLine();
+                    if (saveResult == "1")
                     {
                         resultSavedInMemory = result;
-                        Console.WriteLine($"You pressed yes, saving result {resultSavedInMemory} in memory...\nPress Enter to go back to menu");
+                        Console.WriteLine($"You pressed yes, saving result ({resultSavedInMemory}) in memory...\nPress Enter to go back to menu");
                         Console.ReadLine();
 
                         break;
                     }
-                    else if (SaveResult == "2")
+                    else if (saveResult == "2")
                     {
                         Console.WriteLine($"You pressed no, going back to meny...");
                         Thread.Sleep(2000);
