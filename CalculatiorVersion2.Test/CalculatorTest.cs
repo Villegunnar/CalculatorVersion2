@@ -7,6 +7,7 @@ namespace CalculatiorVersion2.Test
 {
     public class CalculatorTest
     {
+        //Addition
         [Fact]
         public void Adding_Multiple_Numbers_4_4_2_Return_10()
         {
@@ -27,7 +28,10 @@ namespace CalculatiorVersion2.Test
             Assert.Equal(actual, result);
 
         }
+
+
         [Fact]
+        //Subtraction
         public void Subtract_Multiple_Numbers_4_4_2_Return_negative2()
         {
 
@@ -54,6 +58,9 @@ namespace CalculatiorVersion2.Test
         [InlineData(100, 4, 5, 5)]
         [InlineData(60, 10, 3, 2)]
         [InlineData(-60, 3, 0.5, -40)]
+
+
+        //Division
         public void Divide_Multiple_Numbers_and_return_Correct_Sum(double a, double b, double c, double expected)
         {
             // Arrange
@@ -79,6 +86,9 @@ namespace CalculatiorVersion2.Test
         [InlineData(100, 4, 5, 2000)]
         [InlineData(-1, 10, 3, -30)]
         [InlineData(-60, 3, 0.5, -90)]
+
+
+        //Multiplication
         public void Multiply_Multiple_Numbers_and_return_Correct_Sum(double a, double b, double c, double expected)
         {
             // Arrange
@@ -99,6 +109,9 @@ namespace CalculatiorVersion2.Test
 
         }
         [Fact]
+
+
+        //Calculation History
         public void StoreCalculation_Save_Calculation_Return_Same_Calculation()
         {
 
