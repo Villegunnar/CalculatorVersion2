@@ -258,7 +258,7 @@ namespace CalculatorVersion2
                     case "1":
                         Console.Clear();
                         myCal.Addition(userInputs);
-                        myCal.StoreCalculation("+", userInputs);
+                        myCal.StoreCalculation("+", userInputs,result);
                         PrintResult();
                         calcFormMenu = false;
 
@@ -266,21 +266,21 @@ namespace CalculatorVersion2
                     case "2":
                         Console.Clear();
                         myCal.Subtraction(userInputs);
-                        myCal.StoreCalculation("-", userInputs);
+                        myCal.StoreCalculation("-", userInputs, result);
                         PrintResult();
                         calcFormMenu = false;
                         break;
                     case "3":
                         Console.Clear();
                         myCal.Division(userInputs);
-                        myCal.StoreCalculation("/", userInputs);
+                        myCal.StoreCalculation("/", userInputs, result);
                         PrintResult();
                         calcFormMenu = false;
                         break;
                     case "4":
                         Console.Clear();
                         myCal.Multiplication(userInputs);
-                        myCal.StoreCalculation("*", userInputs);
+                        myCal.StoreCalculation("*", userInputs, result);
                         PrintResult();
                         calcFormMenu = false;
                         break;
@@ -340,10 +340,26 @@ namespace CalculatorVersion2
             return result;
         }
         //----------------------------------------------------------
-        public string StoreCalculation(string calcOperator, List<double> inputList)
+        public static void PrintResult()
+        {
+            Console.WriteLine($"Your calculation: {resultString} \nPress enter to go back to menu...");
+            Console.ReadLine();
+
+            myCal.SaveResultInMemory(result);
+
+
+
+
+            resultString = "";
+            userInputs.Clear();
+            result = 0;
+            Console.Clear();
+        }
+        public string StoreCalculation(string calcOperator, List<double> inputList, double tempResult)
         {
             userInputs = inputList;
             calcFormString = calcOperator;
+            result = tempResult;
 
             for (int i = 0; i < userInputs.Count; i++)
             {
@@ -366,23 +382,7 @@ namespace CalculatorVersion2
 
 
         }
-        public static void PrintResult()
-        {
-            Console.WriteLine($"Your calculation: {resultString} \nPress enter to go back to menu...");
-            Console.ReadLine();
-
-            SaveResultInMemory(result);
-
-
-
-
-            resultString = "";
-            userInputs.Clear();
-            result = 0;
-            Console.Clear();
-        }
-
-        public static double SaveResultInMemory(double tempResult)
+        public double SaveResultInMemory(double tempResult)
         {
             result = tempResult;
 
@@ -417,7 +417,6 @@ namespace CalculatorVersion2
 
             return result;
         }
-
         public static void PrintCalcHistory()
         {
             Console.Clear();

@@ -49,11 +49,11 @@ namespace CalculatiorVersion2.Test
 
         }
         [Theory]
-        [InlineData(6, 2, 3,1)]
-        [InlineData(10, 2, 2,2.5)]
-        [InlineData(100, 4, 5,5)]
-        [InlineData(60, 10, 3,2)]
-        [InlineData(-60, 3,0.5,-40)]
+        [InlineData(6, 2, 3, 1)]
+        [InlineData(10, 2, 2, 2.5)]
+        [InlineData(100, 4, 5, 5)]
+        [InlineData(60, 10, 3, 2)]
+        [InlineData(-60, 3, 0.5, -40)]
         public void Divide_Multiple_Numbers_and_return_Correct_Sum(double a, double b, double c, double expected)
         {
             // Arrange
@@ -98,31 +98,27 @@ namespace CalculatiorVersion2.Test
 
 
         }
-
-
-        [Theory]
-        [InlineData(6, 2, 3,"+","6 + 2 + 3 = 11")]
-        [InlineData(10, 2, 2, "-", "10-2-2")]
-        [InlineData(100, 4, 5, "/", "100 4/5 = 0")]
-        [InlineData(60, 10, 3, "*", "60*10*3")]
-        [InlineData(-60, 3, 0.5, "*", "-60*3*0,5")]
-        public void StoreCalculation_Save_Calculation_Return_Same_Calculation(double a, double b, double c, string d, string expected)
+        [Fact]
+        public void StoreCalculation_Save_Calculation_Return_Same_Calculation()
         {
+
             // Arrange
             Calculator myCal = new Calculator();
 
             List<double> userInputs = new List<double>();
-            userInputs.Add(a);
-            userInputs.Add(b);
-            userInputs.Add(c);
+            userInputs.Add(4);
+            userInputs.Add(4);
+            userInputs.Add(2);
+            Calculator.result = 10;
+
             // Act
 
-            string actual = myCal.StoreCalculation( d, userInputs);
-            string result = expected;
-            
+            var actual = myCal.StoreCalculation("+", userInputs, Calculator.result);
+            var result = "4 + 4 + 2  = 10";
+
             // Assert
             Assert.Equal(actual, result);
-
         }
+
     }
 }
