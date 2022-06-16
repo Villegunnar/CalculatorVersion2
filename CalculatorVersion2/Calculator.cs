@@ -7,31 +7,38 @@ namespace CalculatorVersion2
 {
     public class Calculator
     {
-       
-        public static List<double> userInputs = new List<double>();
-        public static double input;
-        public static bool userInputBool = true;
-        public static bool SaveResultMeny = true;
-        public static bool storedResults = true;
-        public static string operatorString;
 
-        public static double resultSavedInMemory = 0;
-        public static string calculationInput;
-        public static double calculationBreakdown;
+        public static List<double> userInputs = new List<double>();
+        public static List<string> CalculationHistory = new List<string>();
+        public static List<double> numbersList = new List<double>();
+        public static List<string> operatorList = new List<string>();
+
         public static int oneNumberCatch;
 
-
+        public static double input;
         public static double input1;
         public static double input2;
         public static double result;
+        public static double resultSavedInMemory = 0;
+        public static double calculationBreakdown;
+
+
+        public static double storeNumber1 = 0;
+        public static double storeNumber2 = 0;
+        public static double storeNumber3 = 0;
+        public static double storeNumber4 = 0;
+
+        public static string operatorString;
+        public static string calculationInput;
         public static string resultString;
         public static string calcFormString;
-
-        public static List<string> CalculationHistory = new List<string>();
+        public static string numberHolder;
 
         public static bool mainMenu = true;
         public static bool calcFormMenu = true;
-
+        public static bool userInputBool = true;
+        public static bool SaveResultMeny = true;
+        public static bool storedResults = true;
 
 
         public static void MainMenu()
@@ -45,7 +52,7 @@ namespace CalculatorVersion2
                 {
                     case "1":
                         UserInputs();
-                        CalculationForm();
+                        CalculationMenu();
                         break;
                     case "2":
                         PrintCalcHistory();
@@ -74,7 +81,7 @@ namespace CalculatorVersion2
                     {
                         case "1":
                             Console.WriteLine($"You pressed yes, adding {resultSavedInMemory} to you current calculation and clearing the saved result from the stored memory");
-                            
+
                             userInputs.Add(resultSavedInMemory);
                             resultSavedInMemory = 0;
                             oneNumberCatch = 1;
@@ -129,119 +136,103 @@ namespace CalculatorVersion2
         public static void CalculationStringHandler()
         {
 
-            string numberHolder = "";
-            List<double> numbersList = new List<double>();
-            List<char> operatorList = new List<char>();
-
+            numberHolder = "";
 
             for (int i = 0; i < calculationInput.Length; i++)
             {
+                Console.WriteLine(i+" = antal loopar");
+                Console.WriteLine(calculationInput[i]);
                 if (char.IsDigit(calculationInput, i))
                 {
                     numberHolder += calculationInput[i];
+               
                 }
-                if (calculationInput[i] == 43 || calculationInput[i] == 45 || calculationInput[i] == 47 || calculationInput[i] == 42)
+                if (calculationInput[i] == 43 
+                 || calculationInput[i] == 45 
+                 || calculationInput[i] == 47 
+                 || calculationInput[i] == 42 
+                 || calculationInput.Length - 1 == i)
+
                 {
                     numbersList.Add(Convert.ToDouble(numberHolder));
                     numberHolder = "";
                     if (calculationInput[i] == 43)
                     {
-                        operatorList.Add(Convert.ToChar(43));
+                        operatorList.Add(Convert.ToString("+"));
                     }
-                    if (calculationInput[i] == 45)
+                    else if (calculationInput[i] == 45)
                     {
-                        operatorList.Add(Convert.ToChar(45));
+                        operatorList.Add(Convert.ToString("-"));
                     }
-                    if (calculationInput[i] == 47)
+                    else if (calculationInput[i] == 47)
                     {
-                        operatorList.Add(Convert.ToChar(47));
+                        operatorList.Add(Convert.ToString("/"));
                     }
-                    if (calculationInput[i] == 42)
+                    else if (calculationInput[i] == 42)
                     {
-                        operatorList.Add(Convert.ToChar(42));
+                        operatorList.Add(Convert.ToString("*"));
                     }
-
-
                 }
-
-                //char firstOperator = operatorList[0];
-                //char secondOperator;
-                //char thirdOperator;
-
-                //if (operatorList[1] == )
-                //{
-
-                //}
-
-                //Console.ReadKey();
-                //for (int n = 0; n < numbersList.Count; n++)
-                //{
-                //    numbersList[n] (operatorList[1]);
-                //}
-
-
-
-
-
-
-
-
-
-
-
-                //if (char.IsDigit(calculationInput, i) && char.IsDigit(calculationInput, i++))
-                //{
-                //    firstNumber += (calculationInput[i - 1]-48) + (calculationInput[i]-48);
-                //    Console.WriteLine(firstNumber);
-                //    Console.ReadLine();
-                //}
-
-
-
-                //if (char.IsDigit(calculationInput, i))
-                //{
-                //    firstNumber += calculationInput[i];
-                //    Console.WriteLine("Number = "+firstNumber);
-                //    if (!char.IsDigit(calculationInput, i))
-                //    {
-                //        firstNumber = "";
-                //    }
-                //}
-                //if (calculationInput[i] == 43)
-                //{
-
-                //    Console.WriteLine("+");
-                //}
-                //if (calculationInput[i] == 45)
-                //{
-                //    Console.WriteLine("-");
-                //}
-                //if (calculationInput[i] == 47)
-                //{
-                //    Console.WriteLine("/");
-                //}
-                //if (calculationInput[i] == 42)
-                //{
-                //    Console.WriteLine("*");
-                //}
-
-
-
-
-                //char firstChar = calculationInput[i];
-
-                //char.IsLetterOrDigit(firstChar);
-                //if ()
-                //{
-
-                //}
             }
 
-            Console.WriteLine();
+            foreach (var item in numbersList)
+            {
+                Console.WriteLine(item);
+            }
+
+            foreach (var item in operatorList)
+            {
+                Console.WriteLine(item);
+            }
+
+
+            Console.ReadLine();
+            for (int i = 0; i < operatorList.Count; i++)
+            {
+                storeNumber1 = 0;
+                storeNumber2 = 0;
+                storeNumber3 = 0;
+                storeNumber4 = 0;
+
+                switch (operatorList[i])
+                {
+                    case "+":
+                        storeNumber1 = numbersList[i] + numbersList[i + 1];
+                        numbersList.RemoveAt(i);
+                        break;
+                    case "-":
+                        storeNumber2 = numbersList[i] - numbersList[i + 1];
+                        numbersList.RemoveAt(i);
+                        numbersList.RemoveAt(i + 1);
+                        break;
+                    case "/":
+                        storeNumber3 = numbersList[i] / numbersList[i + 1];
+                        numbersList.RemoveAt(i);
+                        numbersList.RemoveAt(i + 1);
+                        break;
+                    case "*":
+                        storeNumber4 = numbersList[i] * numbersList[i + 1];
+                        numbersList.RemoveAt(i);
+                        numbersList.RemoveAt(i + 1);
+                        break;
+                    default:
+                        break;
+                }
+
+                double resultTest = storeNumber1;
+            }
+
+
+
+
+
+
+
+
             Console.ReadLine();
 
         }
-        public static void CalculationForm()
+        public static void CalculationMenu()
         {
             while (calcFormMenu)
             {
@@ -285,6 +276,49 @@ namespace CalculatorVersion2
             }
             calcFormMenu = true;
         }
+        //----------------------------------------------------------
+        public static double Addition()
+        {
+
+            foreach (var item in userInputs)
+            {
+                result += item;
+            }
+            return result;
+
+        }
+        public static double Subtraction()
+        {
+
+            result = userInputs[0];
+
+            for (int i = 1; i < userInputs.Count; i++)
+            {
+                result -= userInputs[i];
+            }
+            return result;
+        }
+        public static double Multiplication()
+        {
+            result = userInputs[0];
+
+            for (int i = 1; i < userInputs.Count; i++)
+            {
+                result *= userInputs[i];
+            }
+            return result;
+        }
+        public static double Division()
+        {
+            result = userInputs[0];
+
+            for (int i = 1; i < userInputs.Count; i++)
+            {
+                result /= userInputs[i];
+            }
+            return result;
+        }
+        //----------------------------------------------------------
         public static void StoreCalculation(string calcOperator)
         {
             calcFormString = calcOperator;
@@ -354,56 +388,13 @@ namespace CalculatorVersion2
                     {
                         Console.Clear();
                         Console.WriteLine("Try again...\n");
-                        
+
                     }
                 }
             }
 
             return result;
         }
-
-        public static double Addition()
-        {
-
-            foreach (var item in userInputs)
-            {
-                result += item;
-            }
-            return result;
-
-        }
-        public static double Subtraction()
-        {
-
-            result = userInputs[0];
-
-            for (int i = 1; i < userInputs.Count; i++)
-            {
-                result -= userInputs[i];
-            }
-            return result;
-        }
-        public static double Multiplication()
-        {
-            result = userInputs[0];
-
-            for (int i = 1; i < userInputs.Count; i++)
-            {
-                result *= userInputs[i];
-            }
-            return result;
-        }
-        public static double Division()
-        {
-            result = userInputs[0];
-
-            for (int i = 1; i < userInputs.Count; i++)
-            {
-                result /= userInputs[i];
-            }
-            return result;
-        }
-
 
         public static void PrintCalcHistory()
         {
