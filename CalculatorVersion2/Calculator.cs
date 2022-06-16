@@ -7,7 +7,7 @@ namespace CalculatorVersion2
 {
     public class Calculator
     {
-        //updated
+       
         public static List<double> userInputs = new List<double>();
         public static double input;
         public static bool userInputBool = true;
@@ -18,6 +18,7 @@ namespace CalculatorVersion2
         public static double resultSavedInMemory = 0;
         public static string calculationInput;
         public static double calculationBreakdown;
+        public static int oneNumberCatch;
 
 
         public static double input1;
@@ -62,19 +63,21 @@ namespace CalculatorVersion2
         {
             Console.Clear();
             storedResults = true;
-
+            oneNumberCatch = 0;
             while (userInputBool)
             {
-                if (resultSavedInMemory != 0 || storedResults)
+                if (resultSavedInMemory != 0 && storedResults)
                 {
-                    Console.WriteLine("Would you like to use your stored result in this calculation?\n1. Yes\n2. No");
+                    Console.WriteLine($"Would you like to use your stored result ({resultSavedInMemory}) in this calculation?\n1. Yes\n2. No");
 
                     switch (Console.ReadLine())
                     {
                         case "1":
                             Console.WriteLine($"You pressed yes, adding {resultSavedInMemory} to you current calculation and clearing the saved result from the stored memory");
+                            
                             userInputs.Add(resultSavedInMemory);
                             resultSavedInMemory = 0;
+                            oneNumberCatch = 1;
                             break;
                         case "2":
                             storedResults = false;
@@ -84,23 +87,31 @@ namespace CalculatorVersion2
                     }
                 }
 
-                Console.WriteLine("Please enter a number");
+                Console.Write("Enter a number: ");
 
                 string inputUSer = Console.ReadLine();
 
-                if (double.TryParse(inputUSer, out input))
-                {
-
-                    userInputs.Add(input);
-                }
-                else if (inputUSer == "")
+                if (inputUSer == "" && (oneNumberCatch > 1))
                 {
                     userInputBool = false;
+
                 }
-                else
+                if (double.TryParse(inputUSer, out input))
                 {
-                    Console.WriteLine("You must enter numbers, not special characters!");
+                    oneNumberCatch++;
+                    userInputs.Add(input);
+
                 }
+                if (!double.TryParse(inputUSer, out input))
+                {
+                    Console.WriteLine("Please enter a number!");
+                }
+
+                else if (oneNumberCatch < 1)
+                {
+                    Console.WriteLine("Please enter aleast 2 numbers");
+                }
+
 
             }
             Console.Clear();
@@ -323,7 +334,7 @@ namespace CalculatorVersion2
             {
                 while (SaveResultMeny)
                 {
-                    Console.WriteLine($"By the way! Would you like to save this result to use for later?\n1. Yes\n2. No");
+                    Console.WriteLine($"By the way!\nWould you like to save this result to use for later?\n1. Yes\n2. No");
                     string SaveResult = Console.ReadLine();
                     if (SaveResult == "1")
                     {
@@ -338,6 +349,12 @@ namespace CalculatorVersion2
                         Console.WriteLine($"You pressed no, going back to meny...");
                         Thread.Sleep(2000);
                         break;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("Try again...\n");
+                        
                     }
                 }
             }
