@@ -52,15 +52,14 @@ namespace CalculatiorVersion2.Test
             Assert.Equal(actual, result);
 
         }
+
+        //Division
         [Theory]
         [InlineData(6, 2, 3, 1)]
         [InlineData(10, 2, 2, 2.5)]
         [InlineData(100, 4, 5, 5)]
         [InlineData(60, 10, 3, 2)]
         [InlineData(-60, 3, 0.5, -40)]
-
-
-        //Division
         public void Divide_Multiple_Numbers_and_return_Correct_Sum(double a, double b, double c, double expected)
         {
             // Arrange
@@ -80,15 +79,14 @@ namespace CalculatiorVersion2.Test
 
 
         }
+
+        //Multiplication
         [Theory]
         [InlineData(1, 1, 1, 1)]
         [InlineData(10, 2, 2, 40)]
         [InlineData(100, 4, 5, 2000)]
         [InlineData(-1, 10, 3, -30)]
         [InlineData(-60, 3, 0.5, -90)]
-
-
-        //Multiplication
         public void Multiply_Multiple_Numbers_and_return_Correct_Sum(double a, double b, double c, double expected)
         {
             // Arrange
@@ -132,6 +130,8 @@ namespace CalculatiorVersion2.Test
             // Assert
             Assert.Equal(actual, result);
         }
+
+        
 
     }
 }
