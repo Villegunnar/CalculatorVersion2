@@ -26,7 +26,7 @@
 
     Skriv sedan in “Abc” och tryck enter. 
 
-    Kontrollera att du får ett “Error, enter a number instead” meddelande. 
+    Kontrollera att du får ett “Please enter a number!” meddelande. 
 
     Skriv sedan in 5 och tryck enter. 
 
